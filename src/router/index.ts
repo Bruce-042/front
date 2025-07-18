@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, type Router } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
@@ -36,7 +36,7 @@ const routes: RouteRecordRaw[] = [
   }
 ]
 
-const router = createRouter({
+const router: Router = createRouter({
   history: createWebHistory(),
   routes
 })

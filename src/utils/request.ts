@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios'
+import axios, { type AxiosInstance, type InternalAxiosRequestConfig, type AxiosResponse, type AxiosError } from 'axios'
 import { showToast } from 'vant'
 
 // 创建axios实例
@@ -12,7 +12,7 @@ const request: AxiosInstance = axios.create({
 
 // 请求拦截器
 request.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config: InternalAxiosRequestConfig) => {
     // 添加token
     const token = localStorage.getItem('token')
     if (token && config.headers) {
@@ -20,7 +20,7 @@ request.interceptors.request.use(
     }
     return config
   },
-  (error) => {
+  (error: AxiosError) => {
     return Promise.reject(error)
   }
 )
@@ -38,7 +38,7 @@ request.interceptors.response.use(
       return Promise.reject(new Error(data.message || '请求失败'))
     }
   },
-  (error) => {
+  (error: AxiosError) => {
     const { response } = error
     
     if (response) {
