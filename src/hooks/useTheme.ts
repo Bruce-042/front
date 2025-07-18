@@ -47,7 +47,7 @@ export function useTheme() {
 
   // 初始化主题
   const initTheme = () => {
-    const savedTheme = storage.get<Theme>(STORAGE_KEYS.THEME, 'light')
+    const savedTheme = (storage.get<Theme>(STORAGE_KEYS.THEME, 'light') as Theme) || 'light'
     setTheme(savedTheme)
     watchSystemTheme()
   }

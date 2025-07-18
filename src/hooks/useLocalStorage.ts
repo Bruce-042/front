@@ -2,8 +2,8 @@ import { ref, watch } from 'vue'
 import { storage } from '@/utils/storage'
 
 export function useLocalStorage<T>(key: string, defaultValue?: T) {
-  const storedValue = storage.get<T>(key, defaultValue)
-  const value = ref<T | null>(storedValue)
+  const storedValue = (storage.get<T>(key, defaultValue) as T) || defaultValue
+  const value = ref<T | null>(storedValue as T | null)
 
   // 设置值
   const setValue = (newValue: T) => {
@@ -18,11 +18,11 @@ export function useLocalStorage<T>(key: string, defaultValue?: T) {
   }
 
   // 监听值变化
-  watch(value, (newValue) => {
+  watch(value, (newValue: T | null) => {
     if (newValue === null) {
       storage.remove(key)
     } else {
-      storage.set(key, newValue)
+      storage.set(key, newValue as any)
     }
   })
 

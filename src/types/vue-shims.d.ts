@@ -115,8 +115,23 @@ declare module './App.vue' {
 
 // 路径别名模块声明
 declare module '@/utils/storage' {
-  export const storage: any
-  export const STORAGE_KEYS: any
+  export interface Storage {
+    get<T = any>(key: string, defaultValue?: T): T | null
+    set(key: string, value: any): void
+    remove(key: string): void
+    clear(): void
+    has(key: string): boolean
+    keys(): string[]
+    size(): number
+  }
+  
+  export const storage: Storage
+  export const STORAGE_KEYS: {
+    TOKEN: string
+    USER_INFO: string
+    THEME: string
+    LANGUAGE: string
+  }
 }
 
 declare module '@/utils/request' {
